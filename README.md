@@ -128,9 +128,9 @@ npm run start:dev   # Run in development watch mode
 | **Workshops:** List All, Create / Update / Status Toggle | ✅ | – | – | 
 | **Maintenances:** Create | ✅ | – | – | 
 | **Maintenances:** List / Active / By Vehicle / By Mechanic / History | ✅ | ✅ | – | 
-| **Maintenances:** `GET /maintenances/my` | – | ✅ (own) | – | 
-| **Maintenances:** `GET /maintenances/:id` | ✅ | ✅ (own) | – | 
-| **Maintenances:** `PATCH /maintenances/:id/status` | ✅ | ✅ (own) | – | 
+| **Maintenances:** `GET /maintenances/my` | – | ✅  | – | 
+| **Maintenances:** `GET /maintenances/:id` | ✅ | ✅  | – | 
+| **Maintenances:** `PATCH /maintenances/:id/status` | ✅ | ✅  | – | 
 
 ## Main Endpoints
 
