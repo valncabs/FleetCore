@@ -1,6 +1,6 @@
 # FleetCore – Fleet Maintenance API
 
-REST API built with **NestJS, TypeScript, TypeORM, PostgreSQL, JWT, and argon2** to manage the maintenance lifecycle of a vehicle fleet.
+REST API built with **NestJS, TypeScript, TypeORM, PostgreSQL, JWT, and bcrypt** to manage the maintenance lifecycle of a vehicle fleet.
 
 ## Context & Problem Statement
 
@@ -18,7 +18,7 @@ Currently, preventive and corrective maintenance activities are tracked using sp
 
 ### Objective
 
-As a Backend Developer, the goal is to design and implement a robust REST API using **NestJS, TypeScript, TypeORM, PostgreSQL, JWT, and argon2**. This system automates and streamlines fleet management operations by enabling FleetCore to:
+As a Backend Developer, the goal is to design and implement a robust REST API using **NestJS, TypeScript, TypeORM, PostgreSQL, JWT, and bcrypt**. This system automates and streamlines fleet management operations by enabling FleetCore to:
 
 * Register and manage vehicles, mechanics, and workshops.
 
@@ -65,7 +65,6 @@ sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
 | `DB_SYNC` | `true` lets TypeORM create/update tables automatically (recommended for development) | 
 | `JWT_SECRET`, `JWT_EXPIRES_IN` | JWT signing secret and token lifetime (e.g., `1h`) | 
 | `API_KEYS` | Comma-separated keys accepted in the `x-api-key` header | 
-| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_CALLBACK_URL` | Google OAuth 2.0 configuration (optional) | 
 
 ## Running the Application
 
@@ -104,7 +103,7 @@ npm run start:dev   # Run in development watch mode
 
 * **4 Vehicles** (2 AVAILABLE, 1 IN_MAINTENANCE with an active maintenance, 1 INACTIVE)
 
-* **3 Maintenances** (1 COMPLETED, 1 IN_PROGRESS, 1 SCHEDULED)
+* **3 Maintenances** (1 COMPLETED, 1 IN_PROGRESS)
 
 ## How to Use It (Swagger Workflow)
 
