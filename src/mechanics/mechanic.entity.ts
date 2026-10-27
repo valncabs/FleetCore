@@ -9,31 +9,31 @@ import { User } from '../users/user.entity';
 @Entity('mechanics')
 export class Mechanic {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column()
-  specialty: string;
+  specialty!: string;
 
   @Column({ type: 'enum', enum: MechanicStatus, default: MechanicStatus.ACTIVE })
-  status: MechanicStatus;
+  status!: MechanicStatus;
 
   /** Optional link to the TECHNICIAN user who logs in as this mechanic. */
   @OneToOne(() => User, { nullable: true, onDelete: 'SET NULL' })
   @JoinColumn({ name: 'user_id' })
-  user: User | null;
+  user!: User | null;
 
   @OneToMany(() => Maintenance, (maintenance) => maintenance.mechanic)
-  maintenances: Maintenance[];
+  maintenances!: Maintenance[];
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt!: Date;
 }

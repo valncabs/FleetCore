@@ -190,7 +190,6 @@ CREATE TABLE public.users (
     password_hash character varying,
     full_name character varying NOT NULL,
     role public.users_role_enum DEFAULT 'TECHNICIAN'::public.users_role_enum NOT NULL,
-    google_id character varying,
     is_active boolean DEFAULT true NOT NULL,
     created_at timestamp without time zone DEFAULT now() NOT NULL
 );
@@ -348,7 +347,7 @@ COPY public.mechanics (id, name, email, specialty, status, created_at, updated_a
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.users (id, email, password_hash, full_name, role, google_id, is_active, created_at) FROM stdin;
+COPY public.users (id, email, password_hash, full_name, is_active, created_at) FROM stdin;
 1	admin@fleetcore.com	$argon2id$v=19$m=65536,t=3,p=4$98gSUC3hKTBeH9+Vtxrv+A$JQt43G1Nz9qyULnKZ1lngIkguT+mEWtZcvkKjxN6TSA	Ana Admin	ADMIN	\N	t	2026-10-27 11:40:37.404804
 2	tech1@fleetcore.com	$argon2id$v=19$m=65536,t=3,p=4$xJpn0e+z12EAbHoS+3Wn0A$XkXBcdXpHs4oRMKRw+PzSKyMgNygqd5O3uK1kay8/9A	Carlos Pérez	TECHNICIAN	\N	t	2026-10-27 11:40:37.648359
 3	tech2@fleetcore.com	$argon2id$v=19$m=65536,t=3,p=4$MdgBk5Y/M/ULK1yMyvfGvQ$Fft3mxeEoq+fU74dADA1m/TvGPEjtZjEW3IhYkaiGQA	Laura Gómez	TECHNICIAN	\N	t	2026-10-27 11:40:37.883458
@@ -465,8 +464,6 @@ ALTER TABLE ONLY public.mechanics
 -- Name: users UQ_0bd5012aeb82628e07f6a1be53b; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT "UQ_0bd5012aeb82628e07f6a1be53b" UNIQUE (google_id);
 
 
 --

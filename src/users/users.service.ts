@@ -24,9 +24,6 @@ export class UsersService {
     return this.repo.findOne({ where: { id } });
   }
 
-  findByGoogleId(googleId: string) {
-    return this.repo.findOne({ where: { googleId } });
-  }
 
   create(data: Partial<User>) {
     return this.repo.save(this.repo.create(data));

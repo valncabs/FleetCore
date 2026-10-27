@@ -1,7 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Response } from 'express';
 import { map, Observable } from 'rxjs';
-import { codeToWords } from '../utils/code-in-words';
 
 /**
  * Wraps every successful response in a uniform envelope and adds the HTTP code
@@ -15,7 +14,6 @@ export class ResponseInterceptor implements NestInterceptor {
       map((data) => ({
         success: true,
         statusCode: response.statusCode,
-        codeInWords: codeToWords(response.statusCode),
         data: data ?? null,
         timestamp: new Date().toISOString(),
       })),

@@ -1,6 +1,5 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, AuthUser } from '../common/decorators/current-user.decorator';
 import { Public } from '../common/decorators/public.decorator';
 import { AuthService } from './auth.service';
@@ -29,21 +28,5 @@ export class AuthController {
   @Get('me')
   me(@CurrentUser() user: AuthUser) {
     return user;
-  }
-
-  @Public()
-  @UseGuards(AuthGuard('google'))
-  @ApiOperation({ summary: 'Starts Google OAuth 2.0 login (open it in a browser, not in Swagger "Try it out")' })
-  @Get('google')
-  googleLogin() {
-    // Passport redirects to Google; this body never runs.
-  }
-
-  @Public()
-  @UseGuards(AuthGuard('google'))
-  @ApiOperation({ summary: 'Google redirects here; returns our JWT' })
-  @Get('google/callback')
-  googleCallback(@Req() req: any) {
-    return this.auth.loginWithGoogle(req.user);
   }
 }

@@ -6,17 +6,17 @@ export class CreateMechanicDto {
   /** @example Carlos Pérez */
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   /** @example carlos@fleetcore.com */
   @Transform(({ value }) => (typeof value === 'string' ? value.trim().toLowerCase() : value))
   @IsEmail()
-  email: string;
+  email!: string;
 
   /** @example Engine */
   @IsString()
   @IsNotEmpty()
-  specialty: string;
+  specialty!: string;
 
   @IsOptional()
   @IsEnum(MechanicStatus)

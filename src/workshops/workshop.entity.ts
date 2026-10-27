@@ -5,23 +5,23 @@ import { Maintenance } from '../maintenances/maintenance.entity';
 @Entity('workshops')
 export class Workshop {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column()
-  address: string;
+  address!: string;
 
   @Column({ type: 'enum', enum: WorkshopStatus, default: WorkshopStatus.ACTIVE })
-  status: WorkshopStatus;
+  status!: WorkshopStatus;
 
   @OneToMany(() => Maintenance, (maintenance) => maintenance.workshop)
-  maintenances: Maintenance[];
+  maintenances!: Maintenance[];
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt!: Date;
 }

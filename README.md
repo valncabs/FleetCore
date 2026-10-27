@@ -58,7 +58,7 @@ An alternative to running the seeder is loading the delivered dump: `psql -U pos
 | ADMIN | `admin@fleetcore.com` | `Admin123!` | full access |
 | TECHNICIAN | `tech1@fleetcore.com` | `Tech123!` | linked to mechanic Carlos Pérez |
 | TECHNICIAN | `tech2@fleetcore.com` | `Tech123!` | linked to mechanic Laura Gómez |
-| MANAGER | `manager@fleetcore.com` | `Manager123!` | read-only access |
+
 
 API keys for the integration endpoint: `demo-key-partner-1`, `demo-key-partner-2`.
 
@@ -74,7 +74,7 @@ Seeded data: 4 users, 3 mechanics (2 active linked to the technicians, 1 inactiv
 
 ## Roles and permissions
 
-| Resource | ADMIN | MANAGER | TECHNICIAN |
+| Resource | ADMIN  | TECHNICIAN |
 |---|---|---|---|
 | Vehicles: list / get / by plate | ✅ | ✅ | ✅ |
 | Vehicles: create / update / activate / delete (logical) | ✅ | – | – |
@@ -112,11 +112,11 @@ Seeded data: 4 users, 3 mechanics (2 active linked to the technicians, 1 inactiv
 
 Success:
 ```json
-{ "success": true, "statusCode": 200, "codeInWords": "two zero zero", "data": {}, "timestamp": "..." }
+{ "success": true, "statusCode": 200, "data": {}, "timestamp": "..." }
 ```
 Error (produced by the global exception filter; database unique violations are returned as 409):
 ```json
-{ "success": false, "statusCode": 409, "codeInWords": "four zero nine", "message": "...", "path": "/maintenances", "timestamp": "..." }
+{ "success": false, "statusCode": 409, "message": "...", "path": "/maintenances", "timestamp": "..." }
 ```
 
 ## Google OAuth 2.0 (optional)

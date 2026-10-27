@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import 'dotenv/config';
-import * as argon2 from 'argon2';
+import * as bcrypt from 'bcrypt';
 import { DataSource, DeepPartial, EntityTarget, ObjectLiteral } from 'typeorm';
 import {
   MaintenanceStatus, MaintenanceType, MechanicStatus, Role, VehicleStatus, WorkshopStatus,
@@ -32,14 +32,13 @@ async function seed() {
   await ds.initialize();
   await ds.synchronize(); // make sure tables exist even if DB_SYNC=false
 
-  // ---- users: 1 ADMIN, 2 TECHNICIAN (+1 MANAGER to test that role) ----
-  const mkUser = async (email: string, fullName: string, role: Role, password: string) =>
-    findOrCreate(ds, User, { email }, { email, fullName, role, passwordHash: await argon2.hash(password) });
 
+const mkUser = async (email: string, fullName: string, role: Role, password: string) =>
+  findOrCreate(ds, User, { email }, { email, fullName, role, passwordHash: await bcrypt.hash(password, 10) });
   await mkUser('admin@fleetcore.com', 'Ana Admin', Role.ADMIN, 'Admin123!');
   const tech1 = await mkUser('tech1@fleetcore.com', 'Carlos Pérez', Role.TECHNICIAN, 'Tech123!');
   const tech2 = await mkUser('tech2@fleetcore.com', 'Laura Gómez', Role.TECHNICIAN, 'Tech123!');
-  await mkUser('manager@fleetcore.com', 'Mario Manager', Role.MANAGER, 'Manager123!');
+
 
   // ---- mechanics: 2 active (linked to technicians) + 1 inactive ----
   const mech1 = await findOrCreate(ds, Mechanic, { email: 'carlos.perez@fleetcore.com' }, {
@@ -70,9 +69,7 @@ async function seed() {
   const v2 = await findOrCreate(ds, Vehicle, { plate: 'DEF456' }, {
     plate: 'DEF456', brand: 'Hino', model: '300', year: 2022, mileage: 30000, status: VehicleStatus.AVAILABLE,
   });
-  const v3 = await findOrCreate(ds, Vehicle, { plate: 'GHI789' }, {
-    plate: 'GHI789', brand: 'Isuzu', model: 'ELF', year: 2020, mileage: 52000, status: VehicleStatus.IN_MAINTENANCE,
-  });
+
   await findOrCreate(ds, Vehicle, { plate: 'JKL012' }, {
     plate: 'JKL012', brand: 'Kia', model: 'K2700', year: 2015, mileage: 180000, status: VehicleStatus.INACTIVE,
   });
@@ -86,12 +83,6 @@ async function seed() {
     completedAt: new Date('2026-09-15T10:00:00Z'), vehicle: v1, mechanic: mech1, workshop: workshopCenter,
   });
 
-  const running = hours('2026-10-27T07:30:00Z', 2);
-  await findOrCreate(ds, Maintenance, { description: 'Brake pads replacement', vehicle: { id: v3.id } }, {
-    type: MaintenanceType.CORRECTIVE, description: 'Brake pads replacement', mileage: 52000,
-    scheduledDate: running.start, scheduledEndDate: running.end, status: MaintenanceStatus.IN_PROGRESS,
-    vehicle: v3, mechanic: mech2, workshop: workshopCenter,
-  });
 
   // Extra: a SCHEDULED one so a technician can try the SCHEDULED -> IN_PROGRESS flow.
   const planned = hours('2026-11-02T07:30:00Z', 1.5);

@@ -5,32 +5,32 @@ import { Maintenance } from '../maintenances/maintenance.entity';
 @Entity('vehicles')
 export class Vehicle {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ unique: true, length: 20 })
-  plate: string;
+  plate!: string;
 
   @Column()
-  brand: string;
+  brand!: string;
 
   @Column()
-  model: string;
+  model!: string;
 
   @Column({ type: 'int' })
-  year: number;
+  year!: number;
 
   @Column({ type: 'int', default: 0 })
-  mileage: number;
+  mileage!: number;
 
   @Column({ type: 'enum', enum: VehicleStatus, default: VehicleStatus.AVAILABLE })
-  status: VehicleStatus;
+  status!: VehicleStatus;
 
   @OneToMany(() => Maintenance, (maintenance) => maintenance.vehicle)
-  maintenances: Maintenance[];
+  maintenances!: Maintenance[];
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
+  updatedAt!: Date;
 }

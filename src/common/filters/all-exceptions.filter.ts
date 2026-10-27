@@ -1,11 +1,10 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { QueryFailedError } from 'typeorm';
-import { codeToWords } from '../utils/code-in-words';
 
 /**
  * Global exception filter. Every error leaves the API with the same shape:
- * { success, statusCode, codeInWords, message, path, timestamp }.
+ * { success, statusCode, message, path, timestamp }.
  * Known PostgreSQL errors are mapped to proper HTTP codes so they never surface as a 500:
  *   23505 unique_violation -> 409, 23503 foreign_key_violation -> 409,
  *   23502 not_null_violation / 22P02 invalid_text_representation -> 400.
@@ -63,7 +62,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     response.status(status).json({
       success: false,
       statusCode: status,
-      codeInWords: codeToWords(status),
       message,
       ...(details ? { details } : {}),
       path: request.url,
