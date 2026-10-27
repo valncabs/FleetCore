@@ -17,17 +17,6 @@ export class MechanicsController {
   create(@Body() dto: CreateMechanicDto) {
     return this.mechanics.create(dto);
   }
-
-  @Roles(Role.ADMIN, Role.MANAGER)
-  @Get()
-  findAll() {
-    return this.mechanics.findAll();
-  }
-
-  @Roles(Role.ADMIN, Role.MANAGER)
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.mechanics.findOne(id);
   }
 
   @Roles(Role.ADMIN)
